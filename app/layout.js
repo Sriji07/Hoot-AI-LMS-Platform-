@@ -1,24 +1,24 @@
-import { Outfit } from "next/font/google";
-import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
-import Provider from './provider.js'; // ✅ correct path and capitalization
-import { Toaster } from "sonner";
+import "./globals.css";
+import { Outfit } from "next/font/google";
+import Provider from "./provider";
+import { Toaster } from "../components/ui/sonner";
+
+export const metadata = {
+  title: "Hoot AI",
+  description: "AI-Powered Learning Platform",
+};
 
 const outfit = Outfit({
   subsets: ["latin"],
 });
 
-export const metadata = {
-  title: "Hoot AI",
-  description: "Hoot AI - Your AI Student Assistant",
-};
-
 export default function RootLayout({ children }) {
   return (
-    <ClerkProvider>
+    <ClerkProvider appearance={{ baseTheme: outfit.className }} dynamic={true}>
       <html lang="en">
         <body className={outfit.className}>
-          <Provider> {children}</Provider>
+          <Provider>{children}</Provider>
           <Toaster />
         </body>
       </html>

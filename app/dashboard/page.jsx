@@ -7,6 +7,7 @@ export default function DashboardPage() {
         <div>
             <WelcomeBanner />
             <CourseList />
+
         </div>
     );
 }

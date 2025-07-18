@@ -1,0 +1,23 @@
+import { db } from "../../../configs/db";
+import { COURSES_TABLE } from "../../../configs/schema";
+import { eq } from "drizzle-orm";
+import { NextResponse } from "next/server";
+
+export async function GET(req) {
+    try {
+        const userEmail = req.headers.get("x-user-email");
+        if (!userEmail) {
+            return NextResponse.json({ count: 0 });
+        }
+
+        const courses = await db
+            .select()
+            .from(COURSES_TABLE)
+            .where(eq(COURSES_TABLE.userEmail, userEmail));
+
+        return NextResponse.json({ count: courses.length });
+    } catch (error) {
+        console.error("Error fetching courses count:", error);
+        return NextResponse.json({ count: 0 }, { status: 500 });
+    }
+}

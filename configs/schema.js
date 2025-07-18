@@ -1,10 +1,19 @@
-import { serial, boolean, pgTable, varchar, json, text } from "drizzle-orm/pg-core";
+import {
+    pgTable,
+    boolean,
+    serial,
+    varchar,
+    json,
+    text,
+    integer,
+} from "drizzle-orm/pg-core";
 
 export const USER_TABLE = pgTable("users", {
     id: serial().primaryKey(),
-    name: varchar({ length: 255 }).notNull(),
-    email: varchar().notNull().unique(),
+    name: varchar().notNull(),
+    email: varchar().notNull(),
     isMember: boolean().default(false),
+    customerId: varchar(),
 });
 
 export const STUDY_MATERIAL_TABLE = pgTable("studyMaterial", {

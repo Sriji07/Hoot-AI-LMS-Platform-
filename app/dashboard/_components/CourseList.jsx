@@ -5,31 +5,48 @@ import { useState, useEffect, useContext } from "react";
 import CourseCardItem from "./CourseCardItem";
 import { Button } from "../../../components/ui/button";
 import { RefreshCw } from "lucide-react";
-//import { CourseCountContext } from "@/app/_context/CourseCountContext";
+import { CourseCountContext } from "../../context/CourseCountContext";
 
 function CourseList() {
-    const { user } = useUser();
+    const { user, isLoaded } = useUser();
     const [courseList, setCourseList] = useState([]);
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
+    const { setTotalCourse } = useContext(CourseCountContext);
 
     useEffect(() => {
-
-        user && GetCourseList();
-
-    }, [user]);
+        if (isLoaded && user) {
+            GetCourseList();
+        }
+    }, [isLoaded, user]);
 
     const GetCourseList = async () => {
-        setLoading(true);
-        const result = await axios.post("/api/courses", {
-            createdBy: user.primaryEmailAddress.emailAddress,
-        });
-        console.log(result);
-        setCourseList(result.data.result);
-        setLoading(false);
+        if (!user?.primaryEmailAddress?.emailAddress) return;
+
+        try {
+            setLoading(true);
+            const result = await axios.post("/api/courses", {
+                createdBy: user.primaryEmailAddress.emailAddress,
+            });
+            setCourseList(result.data.result || []);
+            setTotalCourse(result.data.result.length);
+        } catch (error) {
+            console.error("Error fetching course list:", error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    if (!isLoaded || !user) {
+        return (
+            <div className="w-full h-[40vh] flex items-center justify-center">
+                <div className="animate-spin h-8 w-8 border-4 border-blue-500 rounded-full border-t-transparent"></div>
+            </div>
+        );
     }
+
     return (
-        <div>
-            <h2 className="font-bold text-2xl flex justify-between items-center mt-6">
+        <div className="mt-10">
+            <h2 className="font-bold text-2xl flex justify-between items-center">
                 Your Study Material
                 <Button
                     variant="outline"
@@ -41,7 +58,6 @@ function CourseList() {
                     {loading ? "Loading..." : "Refresh"}
                 </Button>
             </h2>
-
             <div className="grid grid-col-2 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-6">
                 {!loading
                     ? courseList?.map((course, index) => (
@@ -55,8 +71,7 @@ function CourseList() {
                     ))}
             </div>
         </div>
-
-    )
+    );
 }
 
-export default CourseList
+export default CourseList;
