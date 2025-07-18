@@ -10,7 +10,6 @@ import { useRouter } from "next/navigation";
 import { Loader } from "lucide-react";
 import { toast } from "sonner";
 
-
 function Create() {
     const { user } = useUser();
     const router = useRouter();
@@ -18,40 +17,51 @@ function Create() {
     const [formData, setFormData] = useState({});
     const [loading, setLoading] = useState(false);
 
-
     const handleUserInput = (fieldName, fieldValue) => {
         setFormData((prev) => ({
             ...prev,
             [fieldName]: fieldValue,
         }));
-        console.log(formData);
     };
+
     const GenerateCourseOutline = async () => {
+        if (!formData.topic) {
+            toast.error("Please enter a topic before generating!");
+            return;
+        }
+
         const courseId = uuidv4();
         setLoading(true);
-        const result = await axios.post("/api/generate-course-outline", {
-            courseId: courseId,
-            ...formData,
-            createdBy: user?.primaryEmailAddress?.emailAddress,
-        });
-        toast.success("Pls wait your course is generating!");
-        setLoading(false);
-        router.replace("/dashboard");
-        //toast Notification
-        toast("Your course content is generating, Click on Refresh Button");
-        console.log(result.data.result.resp);
+
+        try {
+            const result = await axios.post("/api/generate-course-outline", {
+                courseId: courseId,
+                ...formData,
+                createdBy: user?.primaryEmailAddress?.emailAddress,
+            });
+            toast.success("Please wait, your course is generating!");
+            router.replace("/dashboard");
+        } catch (error) {
+            toast.error("Failed to generate course. Try again.");
+        } finally {
+            setLoading(false);
+        }
     };
+
     return (
-        <div className="flex flex-col items-center p-5 md:px-24 lg:px-36 mt-20">
-            <h2 className="font-bold text-4xl text-primary ">
-                Start Building your Personal Study Material
-            </h2>
-            <p className="text-gray-500 text-lg">
-                Fill all details in order to generate study material for your next
-                project
-            </p>
-            <div className="mt-10">
-                {step == 0 ? (
+        <div className="min-h-screen w-full flex flex-col justify-center items-center bg-gradient-to-r from-[#FFF8E7] via-[#FEEBC8] to-[#FFF8E7] px-4 py-10">
+            <div className="text-center mb-10">
+                <h2 className="font-extrabold text-4xl md:text-5xl mb-4 bg-gradient-to-r from-[#FFD85E] via-[#FFB800] to-[#3D4E6D] text-transparent bg-clip-text">
+                    Build Your Personal Study Material
+                </h2>
+
+                <p className="text-gray-600 text-lg max-w-xl mx-auto">
+                    Fill in the details to generate personalized content for your next learning journey.
+                </p>
+            </div>
+
+            <div className=" w-full max-w-3xl  p-6 md:p-10 transition-all duration-300 ease-in-out">
+                {step === 0 ? (
                     <SelectOption
                         selectedStudyType={(value) => handleUserInput("courseType", value)}
                     />
@@ -63,24 +73,55 @@ function Create() {
                         setTopic={(value) => handleUserInput("topic", value)}
                     />
                 )}
-            </div>
-            <div className="flex justify-between w-[60%] mt-32">
-                {step != 0 ? (
-                    <Button variant="outline" onClick={() => setStep(step - 1)}>
-                        Previous
-                    </Button>
-                ) : (
-                    "-"
-                )}
-                {step == 0 ? (
-                    <Button onClick={() => setStep(step + 1)}>Next</Button>
-                ) : (
-                    <Button onClick={GenerateCourseOutline} disabled={loading}>
-                        {loading ? <Loader className="animate-spin" /> : 'Generate'}</Button>
-                )}
+
+                <div className="flex justify-between items-center mt-16">
+                    {step !== 0 ? (
+                        <Button
+                            variant="outline"
+                            onClick={() => {
+                                setStep(step - 1);
+                                if (step - 1 === 0) {
+                                    setFormData((prev) => ({
+                                        ...prev,
+                                        courseType: "",
+                                    }));
+                                }
+                            }}
+                            className="bg-white border border-gray-300 hover:bg-gray-100 text-gray-700"
+                        >
+                            Previous
+                        </Button>
+                    ) : (
+                        <span className="invisible">-</span>
+                    )}
+
+                    {step === 0 ? (
+                        <Button
+                            onClick={() => setStep(step + 1)}
+                            disabled={!formData.courseType}
+                            className={`px-6 py-3 rounded-full font-semibold shadow-md transition-all duration-300 ${formData.courseType
+                                ? "bg-[#FFD85E] hover:bg-[#FFB800] text-[#3D4E6D]"
+                                : "bg-gray-300 text-gray-600 cursor-not-allowed"
+                                }`}
+                        >
+                            Next
+                        </Button>
+                    ) : (
+                        <Button
+                            onClick={GenerateCourseOutline}
+                            disabled={!formData.topic || loading}
+                            className={`px-6 py-3 rounded-full font-semibold shadow-md transition-all duration-300 ${!formData.topic || loading
+                                ? "bg-gray-300 text-gray-600 cursor-not-allowed"
+                                : "bg-[#FFD85E] hover:bg-[#FFB800] text-[#3D4E6D]"
+                                }`}
+                        >
+                            {loading ? <Loader className="animate-spin" /> : "Generate"}
+                        </Button>
+                    )}
+                </div>
             </div>
         </div>
-    )
+    );
 }
 
-export default Create
+export default Create;

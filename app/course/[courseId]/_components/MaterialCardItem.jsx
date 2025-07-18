@@ -15,35 +15,34 @@ const MaterialCardItem = ({ item, studyTypeContent, course, refreshData }) => {
         const content = studyTypeContent[item.type.toLowerCase()];
         if (!content) return false;
 
-        // For notes, check if array has items
         if (item.type === "notes") {
             return content.length > 0;
         }
 
-        // For other types, check if array has items and they have content
         return content.length > 0 && content.some((item) => item.content);
     };
 
     const GenerateContent = async (e) => {
         try {
-            e.preventDefault(); // Prevent navigation
+            e.preventDefault();
             setLoading(true);
+
             let chapters = "";
             course?.courseLayout?.chapters.forEach((chapter) => {
                 chapters = chapter?.chapterTitle + "," + chapters;
             });
 
-            const result = await axios.post("/api/study-type-content", {
+            await axios.post("/api/study-type-content", {
                 courseId: course?.courseId,
                 type: item.type,
                 chapters: chapters,
             });
 
             refreshData(true);
-            toast("Content generation started. Pls refresh after some time.");
+            toast.success("Content generation started. Refresh after some time.");
         } catch (error) {
             console.error("Generation error:", error);
-            toast(
+            toast.error(
                 "Error generating content: " +
                 (error.response?.data?.message || error.message)
             );
@@ -55,36 +54,48 @@ const MaterialCardItem = ({ item, studyTypeContent, course, refreshData }) => {
     const contentReady = isContentReady();
 
     return (
-        <Link href={"/course/" + course?.courseId + item.path}>
+        <Link href={`/course/${course?.courseId}${item.path}`} className="w-full">
             <div
-                className={`border shadow-md rounded-lg p-5 flex flex-col items-center ${!contentReady && "grayscale"
+                className={`flex flex-col items-center justify-between p-6 bg-white rounded-2xl shadow-lg border border-gray-100 transition-all hover:shadow-2xl hover:scale-[1.02] backdrop-blur-md ${!contentReady && "opacity-70"
                     }`}
+                style={{
+                    width: "240px", // ✅ Fixed width
+                    height: "320px", // ✅ Fixed height for uniform cards
+                }}
             >
-                {!contentReady ? (
-                    <h2 className="p-1 px-2 bg-gray-500 text-white rounded-full text-[10px] mb-2">
-                        Generate
-                    </h2>
-                ) : (
-                    <h2 className="p-1 px-2 bg-green-500 text-white rounded-full text-[10px] mb-2">
-                        Ready
-                    </h2>
-                )}
+                {/* Status Badge */}
+                <h2
+                    className={`text-[10px] font-bold px-3 py-1 rounded-full mb-3 ${contentReady ? "bg-green-500 text-white" : "bg-gray-400 text-white"
+                        }`}
+                >
+                    {contentReady ? "Ready" : "Generate"}
+                </h2>
 
-                <Image src={item.icon} alt={item.name} width={50} height={50} />
-                <h2 className="font-medium mt-3">{item.name}</h2>
-                <p className="text-gray-500 text-sm text-center">{item.desc}</p>
+                {/* Icon */}
+                <div className="bg-gradient-to-br from-[#FFD85E] to-[#FFB800] p-5 rounded-full shadow-md mb-4">
+                    <Image src={item.icon} alt={item.name} width={60} height={60} />
+                </div>
 
+                {/* Title */}
+                <h2 className="font-bold text-lg text-[#3D4E6D] text-center mb-2 line-clamp-1">
+                    {item.name}
+                </h2>
+                <p className="text-gray-600 text-xs text-center mb-4 line-clamp-2">
+                    {item.desc}
+                </p>
+
+                {/* Action Button */}
                 {!contentReady ? (
                     <Button
-                        className="mt-3 w-full"
-                        variant="outline"
+                        className="w-full bg-[#FFD85E] hover:bg-[#FFB800] text-[#3D4E6D] font-semibold rounded-lg shadow-sm"
                         onClick={GenerateContent}
+                        disabled={loading}
                     >
-                        {loading && <RefreshCcw className="animate-spin" />}
+                        {loading && <RefreshCcw className="animate-spin mr-2" />}
                         Generate
                     </Button>
                 ) : (
-                    <Button className="mt-3 w-full" variant="outline">
+                    <Button className="w-full bg-[#3D4E6D] hover:bg-[#2C3B55] text-white font-semibold rounded-lg shadow-sm">
                         View
                     </Button>
                 )}

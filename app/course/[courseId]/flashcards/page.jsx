@@ -33,17 +33,12 @@ function Flashcards() {
     const GetFlashCards = async () => {
         try {
             setIsLoading(true);
-
             const result = await axios.post("/api/study-type", {
                 courseId: courseId,
                 studyType: "Flashcard",
             });
 
-            console.log("Flashcards API response:", result.data);
-
-            // ✅ Fix: If API returns an object with content as string, parse it
             const content = result.data?.content;
-
             let parsedContent = [];
             if (typeof content === "string") {
                 parsedContent = JSON.parse(content);
@@ -53,42 +48,35 @@ function Flashcards() {
 
             setFlashCards(parsedContent);
         } catch (error) {
-            console.error("Error fetching flashcards:", error);
             toast.error("Failed to load flashcards");
         } finally {
             setIsLoading(false);
         }
     };
 
-
     const handleClick = () => setIsFlipped((prev) => !prev);
 
     if (isLoading) {
         return (
-            <div className="flex justify-center items-center h-screen">
-                <ClipLoader size={50} color="#3498db" />
+            <div className="flex justify-center items-center h-screen bg-white">
+                <ClipLoader size={50} color="#FFD85E" />
             </div>
         );
     }
 
     return (
-        <div>
-            <h2 className="font-bold text-2xl mb-2">Flashcards</h2>
-            <p className="mb-4">The ultimate tool to lock in concepts!</p>
+        <div className="p-6 max-w-3xl mx-auto text-center">
+            <h2 className="text-3xl font-bold text-[#3D4E6D]">Flashcards</h2>
+            <p className="text-gray-500 mb-6">Tap to flip and learn quickly!</p>
 
             {flashCards.length === 0 ? (
-                <div className="text-center text-gray-500 mt-10">
-                    No flashcards available yet. Try generating them!
-                </div>
+                <p className="text-gray-400">No flashcards available yet.</p>
             ) : (
-                <div className="mt-8">
+                <div>
                     <Carousel setApi={setApi}>
                         <CarouselContent>
                             {flashCards.map((flashcard, index) => (
-                                <CarouselItem
-                                    key={index}
-                                    className="flex items-center justify-center"
-                                >
+                                <CarouselItem key={index} className="flex justify-center">
                                     <FlashcardItem
                                         isFlipped={isFlipped}
                                         handleClick={handleClick}
@@ -97,8 +85,10 @@ function Flashcards() {
                                 </CarouselItem>
                             ))}
                         </CarouselContent>
-                        <CarouselPrevious />
-                        <CarouselNext />
+                        <div className="flex justify-center gap-4 mt-4">
+                            <CarouselPrevious className="bg-[#FFD85E] hover:bg-[#FFB800] text-[#3D4E6D] px-4 py-2 rounded-full" />
+                            <CarouselNext className="bg-[#FFD85E] hover:bg-[#FFB800] text-[#3D4E6D] px-4 py-2 rounded-full" />
+                        </div>
                     </Carousel>
                 </div>
             )}

@@ -21,13 +21,11 @@ function ViewNotes() {
                 studyType: "notes",
             });
 
-            // No need to parse notes as JSON if it's already HTML content.
             const parsedNotes = result?.data?.notes.map((note) => ({
                 ...note,
-                notes: note.notes, // Directly use the HTML string.
+                notes: note.notes,
             }));
 
-            console.log("Parsed Notes:", parsedNotes); // Debug log
             setNotes(parsedNotes || []);
         } catch (error) {
             console.error("Failed to fetch notes:", error);
@@ -39,75 +37,97 @@ function ViewNotes() {
             .replace(/^```html/g, "")
             .replace(/'''$/g, "")
             .trim();
+
         return content
             .replace(
                 /<h3>/g,
-                `<h3 style="font-size:24px; font-weight:600; color:#333; margin-bottom:10px;">`
+                `<h3 style="font-size:24px; font-weight:700; color:#3D4E6D; margin-bottom:15px;">`
             )
             .replace(
                 /<h4>/g,
-                `<h4 style="font-size:20px; font-weight:500; color:#444; margin-bottom:8px;">`
+                `<h4 style="font-size:20px; font-weight:600; color:#4A5C7D; margin-bottom:10px;">`
             )
             .replace(
                 /<p>/g,
-                `<p style="font-size:16px; color:#555; line-height:1.6; margin-bottom:12px;">`
+                `<p style="font-size:16px; color:#555; line-height:1.8; margin-bottom:15px;">`
             )
             .replace(
                 /<li>/g,
-                `<li style="font-size:16px; color:#555; line-height:1.6; margin-bottom:12px;">`
+                `<li style="font-size:16px; color:#444; line-height:1.8; margin-bottom:10px;">`
             );
     };
 
     if (!Array.isArray(notes)) {
-        return <div>No notes available</div>;
+        return (
+            <div className="text-center text-gray-500 mt-20">No notes available</div>
+        );
     }
 
     return notes.length > 0 ? (
-        <div>
-            <div className="flex gap-5 items-center">
+        <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-b from-[#F9FAFB] to-[#EFF1F5] px-6 py-10">
+            {/* Navigation Buttons + Progress Bar */}
+            <div className="flex items-center gap-4 mb-8 w-full max-w-3xl">
                 <Button
                     variant="outline"
                     size="sm"
                     onClick={() => setStepCount((prev) => Math.max(prev - 1, 0))}
+                    disabled={stepCount === 0}
+                    className="bg-white shadow-md hover:bg-gray-100 text-[#3D4E6D]"
                 >
                     Previous
                 </Button>
-                {notes.map((_, index) => (
-                    <div
-                        key={index}
-                        className={`w-full h-2 rounded-full ${index < stepCount ? "bg-primary" : "bg-gray-200"
-                            }`}
-                    ></div>
-                ))}
+                <div className="flex-1 flex gap-1">
+                    {notes.map((_, index) => (
+                        <div
+                            key={index}
+                            className={`h-2 flex-1 rounded-full ${index <= stepCount ? "bg-[#FFD85E]" : "bg-gray-200"
+                                }`}
+                        ></div>
+                    ))}
+                </div>
                 <Button
                     variant="outline"
                     size="sm"
                     onClick={() =>
                         setStepCount((prev) => Math.min(prev + 1, notes.length - 1))
                     }
+                    disabled={stepCount === notes.length - 1}
+                    className="bg-white shadow-md hover:bg-gray-100 text-[#3D4E6D]"
                 >
                     Next
                 </Button>
             </div>
 
-            <div className="mt-10">
+            {/* Note Content */}
+            <div className=" shadow-lg rounded-xl p-8 w-full max-w-3xl">
                 <div
-                    className="note-content"
+                    className="prose prose-lg text-gray-700"
                     dangerouslySetInnerHTML={{
                         __html: styleContent(notes[stepCount].notes),
                     }}
                 ></div>
 
                 {stepCount === notes.length - 1 && (
-                    <div className="flex items-center gap-10 flex-col justify-center">
-                        <h2>End of notes</h2>
-                        <Button onClick={() => router.back()}>Go to course page</Button>
+                    <div className="flex flex-col items-center gap-6 mt-10">
+                        <h2 className="text-xl font-semibold text-[#3D4E6D]">
+                            🎉 End of Notes
+                        </h2>
+                        <Button
+                            onClick={() => router.back()}
+                            className="bg-[#FFD85E] hover:bg-[#FFB800] text-[#3D4E6D] font-bold px-6 py-3 rounded-lg"
+                        >
+                            Go to Course Page
+                        </Button>
                     </div>
+
+
                 )}
+
             </div>
+
         </div>
     ) : (
-        <div>No notes available</div>
+        <div className="text-center text-gray-500 mt-20">No notes available</div>
     );
 }
 
