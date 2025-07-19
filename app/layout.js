@@ -8,6 +8,9 @@ import DashboardHeader from "./dashboard/_components/DashboardHeader"; // Add yo
 export const metadata = {
   title: "Hoot AI",
   description: "AI-Powered Learning Platform",
+  icons: {
+    icon: "/logo.svg",  // Your new favicon path
+  }
 };
 
 const outfit = Outfit({
