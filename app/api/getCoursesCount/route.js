@@ -1,5 +1,5 @@
 import { db } from "../../../configs/db";
-import { COURSES_TABLE } from "../../../configs/schema";
+import { STUDY_MATERIAL_TABLE } from "../../../configs/schema";
 import { eq } from "drizzle-orm";
 import { NextResponse } from "next/server";
 
@@ -12,8 +12,8 @@ export async function GET(req) {
 
         const courses = await db
             .select()
-            .from(COURSES_TABLE)
-            .where(eq(COURSES_TABLE.userEmail, userEmail));
+            .from(STUDY_MATERIAL_TABLE)
+            .where(eq(STUDY_MATERIAL_TABLE.userEmail, userEmail));
 
         return NextResponse.json({ count: courses.length });
     } catch (error) {
