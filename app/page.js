@@ -9,8 +9,7 @@ import DashboardHeader from "./dashboard/_components/DashboardHeader";
 export default function LandingPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#FFF8E7] via-[#FEEBC8] to-[#FFF8E7] flex flex-col">
-      {/* ✅ Use your Dashboard Header */}
-      <DashboardHeader />
+
 
       {/* Hero Section */}
       <main className="flex-1 flex flex-col items-center justify-center text-center px-6">
