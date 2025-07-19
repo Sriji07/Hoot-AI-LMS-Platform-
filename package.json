@@ -38,6 +38,7 @@
     "@tailwindcss/postcss": "^4",
     "@types/react": "19.1.8",
     "drizzle-kit": "^0.31.4",
+    "inngest-cli": "^1.9.1",
     "tailwindcss": "^4",
     "tw-animate-css": "^1.3.5"
   }
