@@ -32,7 +32,7 @@ function SideBar() {
     const path = usePathname();
     return (
         <div
-            className="h-screen w-64 shadow-lg p-6 bg-gradient-to-b 
+            className="h-screen w-64 mt-10 mb-40px shadow-lg p-6 bg-gradient-to-b 
             from-[#FFF8E7] via-[#FEEBC8] to-[#FFF8E7] flex flex-col justify-between
             rounded-r-2xl border-r border-[#FFD85E]/40"
         >

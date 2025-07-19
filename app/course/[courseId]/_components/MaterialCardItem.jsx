@@ -20,6 +20,8 @@ const MaterialCardItem = ({ item, studyTypeContent, course, refreshData }) => {
         }
 
         return content.length > 0 && content.some((item) => item.content);
+        console.log("Material Item Type:", item.type);
+
     };
 
     const GenerateContent = async (e) => {
@@ -85,22 +87,37 @@ const MaterialCardItem = ({ item, studyTypeContent, course, refreshData }) => {
                 </p>
 
                 {/* Action Button */}
-                {!contentReady ? (
+                {item.type === "QA" ? (
+
+                    <Link href="/dashboard/upgrade">
+                        <Button
+                            className="mt-3 w-full text-gray-400"
+                            variant="outline"
+                        >
+                            ⭐ Coming Soon
+                        </Button>
+                    </Link>
+
+                ) : !contentReady ? (
                     <Button
-                        className="w-full bg-[#FFD85E] hover:bg-[#FFB800] text-[#3D4E6D] font-semibold rounded-lg shadow-sm"
+                        className="mt-3 w-full"
+                        variant="outline"
                         onClick={GenerateContent}
-                        disabled={loading}
                     >
-                        {loading && <RefreshCcw className="animate-spin mr-2" />}
+                        {loading && <RefreshCcw className="animate-spin" />}
                         Generate
                     </Button>
                 ) : (
-                    <Button className="w-full bg-[#3D4E6D] hover:bg-[#2C3B55] text-white font-semibold rounded-lg shadow-sm">
+                    <Button className="mt-3 w-full" variant="outline">
                         View
                     </Button>
                 )}
+
             </div>
+
         </Link>
+
+
     );
 };
 

@@ -12,7 +12,7 @@ export default function UpgradeComingSoon() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8 }}
             >
-                🚀 Upgrade Coming Soon!
+                🚀 Coming Soon!
             </motion.h1>
             <motion.p
                 className="text-lg md:text-xl text-gray-600 mb-8"

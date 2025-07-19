@@ -3,6 +3,7 @@ import "./globals.css";
 import { Outfit } from "next/font/google";
 import Provider from "./provider";
 import { Toaster } from "../components/ui/sonner";
+import DashboardHeader from "./dashboard/_components/DashboardHeader"; // Add your header
 
 export const metadata = {
   title: "Hoot AI",
@@ -15,10 +16,13 @@ const outfit = Outfit({
 
 export default function RootLayout({ children }) {
   return (
-    <ClerkProvider appearance={{ baseTheme: outfit.className }} dynamic={true}>
+    <ClerkProvider>
       <html lang="en">
         <body className={outfit.className}>
-          <Provider>{children}</Provider>
+          <Provider>
+            <DashboardHeader /> {/* Header is now global */}
+            <main>{children}</main> {/* Add padding for fixed header */}
+          </Provider>
           <Toaster />
         </body>
       </html>

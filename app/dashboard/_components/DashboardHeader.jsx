@@ -8,14 +8,13 @@ function DashboardHeader() {
     return (
         <header
             className="w-full px-3 py-2 flex items-center justify-between 
-        bg-orange-500/30 backdrop-blur-md shadow-sm  sticky top-0 z-50"
-
+        bg-orange-500/30 backdrop-blur-md shadow-sm sticky top-0 z-50"
         >
             {/* Logo & Name */}
             <div className="flex items-center gap-3">
-                <Link href="/dashboard" className="flex items-center gap-2">
+                <Link href="/" className="flex items-center gap-2">
                     <div
-                        className=" shadow-md 
+                        className="shadow-md 
                         hover:scale-105 transition-transform duration-300"
                     >
                         <Image src="/logo.svg" alt="logo" width={45} height={45} />
@@ -33,6 +32,12 @@ function DashboardHeader() {
             <div className="flex items-center gap-4">
                 {/* When user is signed in */}
                 <SignedIn>
+                    <Link
+                        href="/dashboard"
+                        className="px-4 py-2 bg-[#FFD85E] hover:bg-[#FFB800] rounded-lg text-[#3D4E6D] font-semibold transition"
+                    >
+                        Dashboard
+                    </Link>
                     <div className="hover:bg-[#FFF1DA] px-3 py-1 rounded-full transition duration-200">
                         <UserButton
                             appearance={{
@@ -60,8 +65,6 @@ function DashboardHeader() {
                     </div>
                 </SignedOut>
             </div>
-
-
         </header>
     );
 }

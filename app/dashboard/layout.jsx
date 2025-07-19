@@ -12,7 +12,7 @@ export default function DashboardLayout({ children }) {
 
             {/* Main content area with margin to accommodate sidebar */}
             <div className="flex-1 md:ml-65 px-2">
-                <DashboardHeader />
+
 
                 <main className="p-5">
                     {children}
