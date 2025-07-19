@@ -114,10 +114,13 @@ function ViewNotes() {
                         </h2>
                         <Button
                             onClick={() => router.back()}
-                            className="bg-[#FFD85E] hover:bg-[#FFB800] text-[#3D4E6D] font-bold px-6 py-3 rounded-lg"
+                            variant="default"
+                            size="lg"
+                            className="bg-[#FFD85E] hover:bg-[#FFB800] text-[#3D4E6D] font-bold"
                         >
                             Go to Course Page
                         </Button>
+
                     </div>
 
 
