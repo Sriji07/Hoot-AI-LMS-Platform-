@@ -43,27 +43,27 @@ Direct Link: https://hoot-ai-lms-platform.vercel.app/
 
 ---
 
-## 🛠 Tech Stack
+## **🛠 Tech Stack**
 
 ### **Frontend**
-- [Next.js 14 (App Router)](https://nextjs.org/)
-- [React 18](https://react.dev/)
-- [Tailwind CSS](https://tailwindcss.com/) – For modern responsive UI.
-- [ShadCN UI](https://ui.shadcn.com/) – For reusable UI components.
-- [Framer Motion](https://www.framer.com/motion/) – Smooth animations (flashcards, transitions).
-- [Lucide Icons](https://lucide.dev/) – Icon components.
-- [React Spinners](https://www.davidhu.io/react-spinners/) – Loading indicators.
+- **[Next.js 14 (App Router)](https://nextjs.org/)** – Fast, server-rendered and static web apps.  
+- **[React](https://reactjs.org/)** – Component-based UI development.  
+- **[Tailwind CSS](https://tailwindcss.com/)** – Modern, utility-first CSS framework.  
+- **[Shadcn UI](https://ui.shadcn.com/)** – Accessible pre-built components for quick UI design.
 
-### **Backend**
-- **API Routes** in Next.js.
-- **Axios** for client-server communication.
+### **AI & Intelligence**
+- **[Gemini AI](https://ai.google/discover/gemini/)** – Generates personalized plans and interactive learning content.  
+- **[Inngest](https://www.inngest.com/)** – Event-driven workflows for background tasks and AI pipelines.
 
 ### **Authentication**
-- [Clerk](https://clerk.com/) – For user sign-in, sign-up, and session management.
+- **[Clerk](https://clerk.com/)** – User authentication, sign-in, sign-up, and profile management.
 
 ### **Notifications**
-- [Sonner](https://sonner.emilkowal.ski/) – For beautiful toast notifications.
+- **[Sonner](https://sonner.emilkowal.ski/)** – Toast notifications for smooth user feedback.
 
+### **Hosting & Deployment**
+- **[Vercel](https://vercel.com/)** – Fast, reliable, and serverless deployment platform.
+  
 ---
 
 ## 🌟 Future Roadmap
