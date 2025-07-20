@@ -1,4 +1,83 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Hoot AI – Smart Learning Platform
+
+Hoot AI is an AI-powered learning platform that offers personalized study materials, flashcards, quizzes, and upcoming Q/A sections for enhanced student learning. The platform dynamically generates study resources based on the course content and helps students engage with interactive tools to boost retention.
+
+---
+
+## 🚀 Features
+
+### **1. Course Dashboard**
+- Displays an overview of each course.
+- Includes a **Course Intro Card** with title, summary, and chapter count.
+- Integrated **progress tracking** using a progress bar.
+
+### **2. Study Material Generation**
+- Dynamically generates:
+  - **Notes** – Comprehensive summaries of each chapter.
+  - **Flashcards** – Interactive front-back cards to test understanding.
+  - **Quizzes** – Auto-generated quizzes for self-assessment.
+  - **Q/A Section (Coming Soon)** – Premium feature for personalized Q&A sessions.
+
+### **3. Interactive Flashcards**
+- Flip animation using **Framer Motion**.
+- Carousel integration for smooth navigation.
+- Beautifully designed cards with modern UI styling.
+
+### **4. Quizzes with Scoring**
+- Multiple-choice questions with instant feedback (Correct/Incorrect).
+- Shows correct answers when the user makes a mistake.
+- Tracks the **total score** after completing all questions.
+
+### **5. Premium Upgrade Section**
+- A dedicated **Upgrade Page** to unlock premium features like advanced Q&A.
+
+### **6. Authentication with Clerk**
+- User login and profile management powered by **Clerk**.
+- Customizable `UserButton` for profile access.
+
+### **7. Responsive UI**
+- Fully responsive layout designed with **Tailwind CSS**.
+- Gradient backgrounds and modern component designs.
+
+---
+
+## 🛠 Tech Stack
+
+### **Frontend**
+- [Next.js 14 (App Router)](https://nextjs.org/)
+- [React 18](https://react.dev/)
+- [Tailwind CSS](https://tailwindcss.com/) – For modern responsive UI.
+- [ShadCN UI](https://ui.shadcn.com/) – For reusable UI components.
+- [Framer Motion](https://www.framer.com/motion/) – Smooth animations (flashcards, transitions).
+- [Lucide Icons](https://lucide.dev/) – Icon components.
+- [React Spinners](https://www.davidhu.io/react-spinners/) – Loading indicators.
+
+### **Backend**
+- **API Routes** in Next.js.
+- **Axios** for client-server communication.
+
+### **Authentication**
+- [Clerk](https://clerk.com/) – For user sign-in, sign-up, and session management.
+
+### **Notifications**
+- [Sonner](https://sonner.emilkowal.ski/) – For beautiful toast notifications.
+
+---
+
+
+---
+
+## 🌟 Future Roadmap
+
+Q/A Section – AI-based question and answer generation.
+
+Premium Plans – Unlock advanced features like custom flashcards.
+
+Analytics Dashboard – User learning analytics & progress insights.
+
+Mobile App – React Native-based companion app.
+
+
 
 ## Getting Started
 
@@ -14,7 +93,7 @@ pnpm dev
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open (https://hoot-ai-lms-platform.vercel.app/) with your browser to see the result.
 
 You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
 
