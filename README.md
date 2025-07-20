@@ -2,6 +2,8 @@
 
 Hoot AI is an AI-powered learning platform that offers personalized study materials, flashcards, quizzes, and upcoming Q/A sections for enhanced student learning. The platform dynamically generates study resources based on the course content and helps students engage with interactive tools to boost retention.
 
+Direct Link: https://hoot-ai-lms-platform.vercel.app/
+
 ---
 
 ## 🚀 Features
@@ -61,9 +63,6 @@ Hoot AI is an AI-powered learning platform that offers personalized study materi
 
 ### **Notifications**
 - [Sonner](https://sonner.emilkowal.ski/) – For beautiful toast notifications.
-
----
-
 
 ---
 
